@@ -10,15 +10,15 @@ type ApiController struct {
 	Controller
 }
 
-func (p *ApiController) GetUserId(r *http.Request) uint {
+/*func (p *ApiController) GetUserId(r *http.Request) uint {
 	user := p.GetUser(r)
 	if user == nil {
 		return 0
 	}
 	return user.ID
-}
+}*/
 
-func (p *ApiController) GetUser(r *http.Request) *entity.User {
+/*func (p *ApiController) GetUser(r *http.Request) *entity.User {
 	session := Get(r)
 	if session == nil {
 		return nil
@@ -28,5 +28,24 @@ func (p *ApiController) GetUser(r *http.Request) *entity.User {
 		return user
 	}
 	return nil
+}*/
+
+func (p *ApiController) GetUserId(w http.ResponseWriter,r *http.Request) uint {
+	user := p.GetUser(w,r)
+	if user == nil {
+		return 0
+	}
+	return user.ID
 }
 
+func (p *ApiController) GetUser(w http.ResponseWriter,r *http.Request) *entity.User {
+	session := GlobalSession().SessionStart(w,r)
+	if session == nil {
+		return nil
+	}
+	key_user := session.Get(constant.KEY_USER)
+	if user,ok := key_user.(*entity.User);ok{
+		return user
+	}
+	return nil
+}

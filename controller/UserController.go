@@ -7,7 +7,6 @@ import (
 	"cgo/utils"
 	"time"
 	"log"
-	"fmt"
 	"cgo/constant"
 )
 
@@ -63,12 +62,17 @@ func (p *UserConterller)login(w http.ResponseWriter,r *http.Request)  {
 		return
 	}
 
-	session := cgo.New(r)
-	session.Set(constant.KEY_USER,&users[0])
-	fmt.Println(session.Cookie)
-	fmt.Println(session.Value)
+	//self
+	//session := cgo.New(r)
+	//session.Set(constant.KEY_USER,&users[0])
+	//fmt.Println(session.Cookie)
+	//fmt.Println(session.Value)
 	//w.Header().Set("Set-Cookie",session.Cookie.String())
-	http.SetCookie(w,session.Cookie)
+	//http.SetCookie(w,session.Cookie)
+
+	//3party
+	session := cgo.GlobalSession().SessionStart(w,r)
+	session.Set(constant.KEY_USER,&users[0])
 	cgo.ResultOk(w,"login success")
 }
 
@@ -96,7 +100,7 @@ func (p *UserConterller) findAll (w http.ResponseWriter,r *http.Request)  {
 }
 
 func (p *UserConterller) findUser (w http.ResponseWriter,r *http.Request)  {
-	user := p.GetUser(r)
+	user := p.GetUser(w,r)
 	cgo.ResultJsonOk(w,user)
 
 }

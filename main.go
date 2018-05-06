@@ -6,6 +6,7 @@ import (
 	"time"
 	"log"
 	"cgo/controller"
+	_ "cgo/session"
 )
 
 func main() {

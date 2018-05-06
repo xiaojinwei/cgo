@@ -20,7 +20,7 @@ func (p *FeedbackController)Router(router *cgo.RouterHandler)  {
 }
 
 func (p *FeedbackController)feedback(w http.ResponseWriter,r *http.Request)  {
-	userId := p.GetUserId(r)
+	userId := p.GetUserId(w,r)
 	if userId == 0 {
 		cgo.ResultFail(w,"Not logged in")
 		return
@@ -47,7 +47,7 @@ func (p *FeedbackController)feedback(w http.ResponseWriter,r *http.Request)  {
 }
 
 func (p *FeedbackController)getFeedback(w http.ResponseWriter,r *http.Request)  {
-	userId := p.GetUserId(r)
+	userId := p.GetUserId(w,r)
 	if userId == 0 {
 		cgo.ResultFail(w,"Not logged in")
 		return
