@@ -3,7 +3,8 @@ package cgo
 import (
 	"net/http"
 	"time"
-	"github.com/satori/go.uuid"
+	"log"
+	"cgo/utils"
 )
 
 const GSESSION  = "GSESSION"
@@ -25,6 +26,15 @@ func (p *Session)Set(key string,value interface{})  {
 
 //获取session
 func Get(r *http.Request) *Session{
+	cookie,err := r.Cookie(GSESSION)
+	if err != nil || cookie == nil || cookie.Value == "" {
+		log.Println(err)
+		return nil
+	}
+	return sessions[cookie.Value]
+}
+
+func New(r *http.Request) *Session {
 	cookie,_ := r.Cookie(GSESSION)
 	var session *Session
 	if cookie != nil {
@@ -50,13 +60,13 @@ func newCookie() *http.Cookie {
 		Value:newCookieValue(),
 		Path:"/",
 		//Domain:"/",
-		//Expires:time.Now().Add(60 * 60 * 24 * 31),
-		MaxAge:time.Now().Second() + (60 * 60 * 24 * 31),
+		Expires:time.Now().AddDate(0,1,0),
+		//MaxAge:time.Now().Second() + (60 * 60 * 24 * 31),
 	}
 }
 
 func newCookieValue() string {
-	uuid,_ := uuid.NewV4()
+	uuid,_ := utils.RandomUUID()
 	value := uuid.String()
 	return value
 }

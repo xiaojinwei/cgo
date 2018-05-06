@@ -20,6 +20,9 @@ func (p *ApiController) GetUserId(r *http.Request) uint {
 
 func (p *ApiController) GetUser(r *http.Request) *entity.User {
 	session := Get(r)
+	if session == nil {
+		return nil
+	}
 	key_user := session.Get(constant.KEY_USER)
 	if user,ok := key_user.(*entity.User);ok{
 		return user

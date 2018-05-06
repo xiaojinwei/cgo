@@ -37,4 +37,42 @@ func InitDB()  {
 	log.Println("database connect success")
 }
 
+func CreateTable(){
+	userTable := "CREATE TABLE IF NOT EXISTS `user`("+
+				"`id` INT UNSIGNED AUTO_INCREMENT,"+
+				"`username` VARCHAR(20) NOT NULL,"+
+				"`password` VARCHAR(40) NOT NULL,"+
+				"`create_time` DATETIME,"+
+				"PRIMARY KEY ( `id` )"+
+			")ENGINE=InnoDB DEFAULT CHARSET=utf8;"
 
+	feedbackTable := "CREATE TABLE IF NOT EXISTS `feedback`("+
+				"`id` INT UNSIGNED AUTO_INCREMENT,"+
+				"`user_id` INT UNSIGNED NOT NULL,"+
+				"`title` VARCHAR(50) NOT NULL,"+
+				"`content` VARCHAR(200) NOT NULL,"+
+				"`create_time` DATETIME,"+
+				"PRIMARY KEY ( `id` )"+
+			")ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+
+	pictureTable := "CREATE TABLE IF NOT EXISTS `picture`("+
+				"`id` INT UNSIGNED AUTO_INCREMENT,"+
+				"`feedback_id` INT UNSIGNED NOT NULL,"+
+				"`address` VARCHAR(200) NOT NULL,"+
+				"`create_time` DATETIME,"+
+				"PRIMARY KEY ( `id` )"+
+			")ENGINE=InnoDB DEFAULT CHARSET=utf8;"
+
+		_,err := DB.Exec(userTable)
+		if err != nil{
+			log.Panic(err)
+		}
+		_,err = DB.Exec(feedbackTable)
+		if err != nil{
+			log.Panic(err)
+		}
+		_,err = DB.Exec(pictureTable)
+		if err != nil{
+			log.Panic(err)
+		}
+}

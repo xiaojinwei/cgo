@@ -63,7 +63,7 @@ func (p *UserConterller)login(w http.ResponseWriter,r *http.Request)  {
 		return
 	}
 
-	session := cgo.Get(r)
+	session := cgo.New(r)
 	session.Set(constant.KEY_USER,&users[0])
 	fmt.Println(session.Cookie)
 	fmt.Println(session.Value)

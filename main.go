@@ -11,6 +11,7 @@ import (
 func main() {
 
 	cgo.InitDB()
+	cgo.CreateTable()
 
 	server := &http.Server{
 		Addr:":8080",
@@ -26,4 +27,6 @@ func main() {
 
 func RegiterRouter(handler *cgo.RouterHandler) {
 	new(controller.UserConterller).Router(handler)
+	new(controller.FeedbackController).Router(handler)
+	new(controller.StaticController).Router(handler)
 }
