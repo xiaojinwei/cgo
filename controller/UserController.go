@@ -5,7 +5,6 @@ import (
 	"cgo/service"
 	"net/http"
 	"cgo/utils"
-	"time"
 	"log"
 	"cgo/constant"
 )
@@ -62,29 +61,10 @@ func (p *UserConterller)login(w http.ResponseWriter,r *http.Request)  {
 		return
 	}
 
-	//self
-	//session := cgo.New(r)
-	//session.Set(constant.KEY_USER,&users[0])
-	//fmt.Println(session.Cookie)
-	//fmt.Println(session.Value)
-	//w.Header().Set("Set-Cookie",session.Cookie.String())
-	//http.SetCookie(w,session.Cookie)
-
-	//3party
+	//session
 	session := cgo.GlobalSession().SessionStart(w,r)
 	session.Set(constant.KEY_USER,&users[0])
 	cgo.ResultOk(w,"login success")
-}
-
-func getCookie() *http.Cookie {
-	return &http.Cookie{
-		Name:"GSESSION",
-		Value:"ABCDEFG123456",
-		Path:"/",
-		//Domain:"/",
-		//Expires:time.Now().Add(60 * 60 * 24 * 31),
-		MaxAge:time.Now().Second() + (60 * 60 * 24 * 31),
-	}
 }
 
 // GET/POST
