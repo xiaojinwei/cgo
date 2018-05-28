@@ -25,8 +25,8 @@ func (p *FeedbackDao) Insert(feedback *entity.Feedback) int64 {
 	return id
 }
 
-func (p *FeedbackDao) SelectFeedbackById(id uint) []*model.FeedbackResp {
-	rows,err := cgo.DB.Query("SELECT * FROM feedback f,picture p WHERE f.id = ? AND f.id = p.feedback_id",id)
+func (p *FeedbackDao) SelectFeedbackByUserId(id uint) []*model.FeedbackResp {
+	rows,err := cgo.DB.Query("SELECT * FROM feedback f,picture p WHERE f.user_id = ? AND f.id = p.feedback_id",id)
 	if err != nil {
 		log.Println(err)
 		return nil

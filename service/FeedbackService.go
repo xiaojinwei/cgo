@@ -24,6 +24,6 @@ func (p *FeedbackService) Insert(userId uint,title string,content string,picture
 	return id
 }
 
-func (p *FeedbackService)SelectFeedbackById(id uint) []*model.FeedbackResp {
-	return feedbackDao.SelectFeedbackById(id)
+func (p *FeedbackService)SelectFeedbackByUserId(id uint) []*model.FeedbackResp {
+	return feedbackDao.SelectFeedbackByUserId(id)
 }

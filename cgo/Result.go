@@ -17,5 +17,5 @@ func ResultFail(w http.ResponseWriter,err string)  {
 func ResultJsonOk(w http.ResponseWriter,data interface{})  {
 	w.Header().Set("Content-Type","application/json")
 	json,_ := json.Marshal(data)
-	io.WriteString(w,string(json))
+	w.Write(json)
 }

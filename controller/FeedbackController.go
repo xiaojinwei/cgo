@@ -52,6 +52,6 @@ func (p *FeedbackController)getFeedback(w http.ResponseWriter,r *http.Request)  
 		cgo.ResultFail(w,"Not logged in")
 		return
 	}
-	fd := feedbackService.SelectFeedbackById(userId)
+	fd := feedbackService.SelectFeedbackByUserId(userId)
 	cgo.ResultJsonOk(w,fd)
 }
