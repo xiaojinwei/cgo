@@ -42,6 +42,7 @@ func (p *FeedbackDao) SelectFeedbackByUserId(id uint) []*model.FeedbackResp {
 		}
 		resps = p.appendFeedback(resps,&temp)
 	}
+	rows.Close()
 	return resps
 }
 

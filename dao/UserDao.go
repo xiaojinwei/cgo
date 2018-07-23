@@ -39,6 +39,7 @@ func (p *UserDao) SelectUserByName(username string) []entity.User{
 		}
 		users = append(users,user)
 	}
+	rows.Close()
 	return users
 }
 
@@ -58,5 +59,6 @@ func (p *UserDao)SelectAllUser() []entity.User {
 		}
 		users = append(users,user)
 	}
+	rows.Close()
 	return users
 }
