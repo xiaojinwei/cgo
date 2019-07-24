@@ -91,11 +91,7 @@ func (p *Controller) saveFile(filePath,relativePath string,fileHeader *multipart
 		return nil
 	}
 	defer file.Close()
-	name,err := utils.RandomUUID()
-	if err != nil {
-		log.Println(err)
-		return nil
-	}
+	name := utils.RandomUUID()
 	fileType := utils.Ext(fileHeader.Filename,".jpg")
 	newName := name.String() + fileType
 	dst,err := os.Create(filePath + newName)
